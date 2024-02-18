@@ -6,6 +6,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 
 const { envelopeRouter } = require('./routes/envelope.js');
+const { transactionRouter } = require('./routes/transaction.js');
 
 const PORT = 3000;
 
@@ -26,6 +27,7 @@ app.get('/', (req, res, next) => {
 })
 
 app.use('/envelope', envelopeRouter);
+app.use('/transaction', transactionRouter);
 
 // Error-handling Middleware
 app.use((err, req, res, next) => {

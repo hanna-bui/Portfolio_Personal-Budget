@@ -4,6 +4,16 @@ const {db} = require('../db/index.js');
 
 const envelopeRouter = express.Router();
 
+const getEnvelopes = (req, res, next) => {
+    db.query('SELECT * FROM envelopes ORDER BY id ASC', (error, results) => {
+        if (error) {
+            next(error);
+        } else {
+            res.status(200).send(results.rows);
+        }
+    })
+}
+
 const createEnvelope = async (req, res, next) => {
     let {title, balance} = req.query;
 
@@ -25,16 +35,6 @@ const createEnvelope = async (req, res, next) => {
         err.status = 400;
         next(err);
     }
-}
-
-const getEnvelopes = (req, res, next) => {
-    db.query('SELECT * FROM envelopes ORDER BY id ASC', (error, results) => {
-        if (error) {
-            next(error);
-        } else {
-            res.status(200).send(results.rows);
-        }
-    })
 }
 
 const transferEnvelope = async (req, res, next) => {

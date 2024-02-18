@@ -5,13 +5,24 @@ const {db} = require('../db/index.js');
 const transactionRouter = express.Router();
 
 const getTransactions = (req, res, next) => {
-    db.query('SELECT * FROM transactions ORDER BY id ASC', (error, results) => {
-        if (error) {
-            next(error);
-        } else {
-            res.status(200).send(results.rows);
-        }
-    })
+    const {envelope_id} = req.query;
+    if (envelope_id) {
+        db.query('SELECT * FROM transactions WHERE envelope_id = $1 ORDER BY id ASC', [envelope_id], (error, results) => {
+            if (error) {
+                next(error);
+            } else {
+                res.status(200).send(results.rows);
+            }
+        })
+    } else {
+        db.query('SELECT * FROM transactions ORDER BY id ASC', (error, results) => {
+            if (error) {
+                next(error);
+            } else {
+                res.status(200).send(results.rows);
+            }
+        })
+    }    
 }
 
 const createTransaction = async (req, res, next) => {

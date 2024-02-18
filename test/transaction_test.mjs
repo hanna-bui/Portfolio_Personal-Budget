@@ -16,6 +16,15 @@ describe('Transaction', () => {
             assert.equal(response.status, 200);
             assert.isArray(transactions);
         });
+        it('Get list of transactions by envelope_id', async() => {
+            const query_string = {envelope_id: 4}
+            const response = await request(app).get(`${PATH}`).query(query_string);
+
+            const transactions = response.body;
+
+            assert.equal(response.status, 200);
+            assert.isArray(transactions);
+        })
         it('Add a new transaction with payment and envelope_id then delete it', async () => {
             // POST
             const expected = {

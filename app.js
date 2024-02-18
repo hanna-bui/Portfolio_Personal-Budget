@@ -29,10 +29,8 @@ app.use('/envelope', envelopeRouter);
 
 // Error-handling Middleware
 app.use((err, req, res, next) => {
-    if (!err.status) {
-        err.status = 500;
-    }
-    res.status(err.status).send(err.message);
+    const status = err.status || 500;
+    res.status(status).send(err.message);
 });
 
 // TODO: Enable after finish testing

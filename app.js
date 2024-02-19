@@ -11,7 +11,7 @@ const { docRouter } = require('./routes/documentation.js');
 
 const clc = require('cli-color');
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3001;
 
 app.use(cors());
 
@@ -40,8 +40,11 @@ app.use((err, req, res, next) => {
 });
 
 // TODO: Enable after finish testing
-app.listen(PORT, () => {
-    console.log(`\nServer running on:`, clc.blue(`https://personal-budget-g6ff.onrender.com/`), '\nSwagger API-doc:', clc.blue(`https://personal-budget-g6ff.onrender.com/api-docs\n`))
+const server = app.listen(PORT, () => {
+    console.log(`Example app listening on port ${port}!`)
 });
+
+server.keepAliveTimeout = 120 * 1000;
+server.headersTimeout = 120 * 1000;
 
 module.exports = app

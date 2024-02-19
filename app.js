@@ -26,7 +26,7 @@ app.use(
 )
 
 app.get('/', (req, res, next) => {
-    res.sendFile('./index.html');
+    res.sendFile('index.html');
 })
 
 app.use('/envelope', envelopeRouter);

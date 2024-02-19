@@ -5,6 +5,8 @@ const app = express();
 const morgan = require('morgan');
 const cors = require('cors');
 
+const SwaggerUI = require('swagger-ui');
+
 const { envelopeRouter } = require('./routes/envelope.js');
 const { transactionRouter } = require('./routes/transaction.js');
 

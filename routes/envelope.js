@@ -112,7 +112,7 @@ const deleteEnvelope = (req, res, next) => {
 
 envelopeRouter.post('', createEnvelope);
 
-envelopeRouter.get('/budget', getEnvelopes);
+envelopeRouter.get('/all', getEnvelopes);
 
 envelopeRouter.put('/transfer', transferEnvelope);
 

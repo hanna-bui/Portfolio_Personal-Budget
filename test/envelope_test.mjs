@@ -74,9 +74,9 @@ describe('Envelope', () => {
         });
     });
     
-    describe(`${PATH}/budget`, () => {
+    describe(`${PATH}/all`, () => {
         it('Get list of envelopes', async () => {
-            const response = await request(app).get(`${PATH}/budget`);
+            const response = await request(app).get(`${PATH}/all`);
 
             const envelopes = response.body;
 

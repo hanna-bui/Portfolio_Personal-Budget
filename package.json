@@ -1,4 +1,6 @@
 {
+  "author": "Hanna",
+  "license": "MIT",
   "scripts": {
     "prestart": "npm install",
     "start": "node app.js",

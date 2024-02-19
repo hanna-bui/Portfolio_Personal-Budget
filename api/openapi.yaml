@@ -1,408 +1,366 @@
 openapi: 3.0.0
 info:
   title: Personal Budget - OpenAPI 3.0
-  description: This is an api that allows you to create envelopes to create and manage
-    a personal budget
   version: 1.0.1
+  description: >-
+    This is an api that allows you to create envelopes to create and manage a
+    personal budget
+  license:
+    name: MIT License
 servers:
-- url: localhost:3000/
+  - url: https://personal-budget-4nhf.onrender.com
+    variables: {}
 tags:
-- name: envelope
-  description: Everything about your envelope
-- name: transaction
-  description: Access to your transactions
+  - name: envelope
+    description: Everything about your envelope
+  - name: transaction
+    description: Access to your transactions
 paths:
   /envelope:
     post:
       tags:
-      - envelope
+        - envelope
       summary: Add a new envelope to the budget
       description: Add a new envelope to the budget
       operationId: createEnvelope
       parameters:
-      - name: title
-        in: query
-        description: Title of the envelope
-        required: true
-        style: form
-        explode: false
-        schema:
-          type: string
-      - name: balance
-        in: query
-        description: Amount of money saved in the envelope
-        required: false
-        style: form
-        explode: false
-        schema:
-          type: string
+        - name: title
+          in: query
+          description: Title of the envelope
+          required: true
+          explode: false
+          schema:
+            type: string
+        - name: balance
+          in: query
+          description: Amount of money saved in the envelope
+          required: false
+          explode: false
+          schema:
+            type: string
       responses:
-        "201":
+        '201':
           description: Successful operation
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Envelope'
-        "400":
+        '400':
           description: Title not supplied
           content:
             application/json:
               example: Please provide a title
-      x-swagger-router-controller: Envelope
   /envelope/{id}:
     get:
       tags:
-      - envelope
+        - envelope
       summary: Find envelope by ID
       description: Returns a single envelope
       operationId: getEnvelopeById
       parameters:
-      - name: id
-        in: path
-        description: ID of envelope to return
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: integer
-          format: int64
+        - name: id
+          in: path
+          description: ID of envelope to return
+          required: true
+          schema:
+            type: integer
+            format: int64
       responses:
-        "200":
+        '200':
           description: successful operation
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Envelope'
-        "400":
+        '400':
           description: Invalid ID supplied
           content:
             application/json:
               example: Not a valid envelope ID
-      x-swagger-router-controller: Envelope
     put:
       tags:
-      - envelope
+        - envelope
       summary: Update an existing envelope
       description: Returns a single envelope
       operationId: updateEnvelope
       parameters:
-      - name: id
-        in: path
-        description: ID of envelope to return
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: integer
-          format: int64
-      - name: title
-        in: query
-        description: Title of the envelope
-        required: false
-        style: form
-        explode: false
-        schema:
-          type: string
-      - name: balance
-        in: query
-        description: Amount of money saved in the envelope
-        required: false
-        style: form
-        explode: false
-        schema:
-          type: string
+        - name: id
+          in: path
+          description: ID of envelope to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: title
+          in: query
+          description: Title of the envelope
+          required: false
+          explode: false
+          schema:
+            type: string
+        - name: balance
+          in: query
+          description: Amount of money saved in the envelope
+          required: false
+          explode: false
+          schema:
+            type: string
       responses:
-        "200":
+        '200':
           description: successful operation
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Envelope'
-        "404":
+        '404':
           description: Invalid ID supplied
           content:
             application/json:
               example: Not a valid envelope ID
-      x-swagger-router-controller: Envelope
     delete:
       tags:
-      - envelope
+        - envelope
       summary: Deletes an envelope
       description: Delete a envelope
       operationId: deleteEnvelope
       parameters:
-      - name: id
-        in: path
-        description: ID of envelope to return
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: integer
-          format: int64
+        - name: id
+          in: path
+          description: ID of envelope to return
+          required: true
+          schema:
+            type: integer
+            format: int64
       responses:
-        "204":
+        '204':
           description: successful operation
-        "404":
+        '404':
           description: Invalid ID supplied
           content:
             application/json:
               example: Not a valid envelope ID
-      x-swagger-router-controller: Envelope
   /envelope/transfer:
     put:
       tags:
-      - envelope
+        - envelope
       summary: Transfer money between two envelopes
       description: Returns the two envelopes after the transfer
       operationId: transferEnvelope
       parameters:
-      - name: from
-        in: query
-        description: ID of envelope you want to transfer from
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: integer
-          format: int64
-      - name: to
-        in: query
-        description: ID of envelope you want to transfer to
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: integer
-          format: int64
-      - name: amount
-        in: query
-        description: The amount of money to transfer
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: number
+        - name: from
+          in: query
+          description: ID of envelope you want to transfer from
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: to
+          in: query
+          description: ID of envelope you want to transfer to
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: amount
+          in: query
+          description: The amount of money to transfer
+          required: true
+          schema:
+            type: number
       responses:
-        "200":
+        '200':
           description: Successful operation
           content:
             application/json:
               examples:
                 transfer:
                   $ref: '#/components/examples/transfer'
-      x-swagger-router-controller: Envelope
   /envelope/all:
     get:
       tags:
-      - envelope
+        - envelope
       summary: Get all envelopes available
       description: Returns a list of envelopes
       operationId: getEnvelopes
       responses:
-        "200":
+        '200':
           description: Successful operation
           content:
             application/json:
               examples:
                 envelopes:
                   $ref: '#/components/examples/envelopes'
-      x-swagger-router-controller: Envelope
   /transaction:
     get:
       tags:
-      - transaction
+        - transaction
       summary: Get all transactions available
       description: Returns a list of transactions
       operationId: getTransactions
       parameters:
-      - name: envelope_id
-        in: query
-        description: Envelope's ID the transaction belongs to
-        required: false
-        style: form
-        explode: false
-        schema:
-          type: integer
+        - name: envelope_id
+          in: query
+          description: Envelope's ID the transaction belongs to
+          required: false
+          explode: false
+          schema:
+            type: integer
       responses:
-        "200":
+        '200':
           description: Successful operation without envelope_id
           content:
             application/json:
               examples:
                 transactions:
                   $ref: '#/components/examples/transactions'
-      x-swagger-router-controller: Transaction
     post:
       tags:
-      - transaction
+        - transaction
       summary: Add a new transaction
       description: Add a new transaction
       operationId: createTransactions
       parameters:
-      - name: date
-        in: query
-        description: Date of the transaction
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: payment
-        in: query
-        description: Payment amount
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: number
-      - name: recipient
-        in: query
-        description: Payment recipient
-        required: false
-        style: form
-        explode: false
-        schema:
-          type: string
-      - name: envelope_id
-        in: query
-        description: Envelope's ID the transaction belongs to
-        required: true
-        style: form
-        explode: false
-        schema:
-          type: integer
+        - name: date
+          in: query
+          description: Date of the transaction
+          required: false
+          schema:
+            type: string
+        - name: payment
+          in: query
+          description: Payment amount
+          required: true
+          schema:
+            type: number
+        - name: recipient
+          in: query
+          description: Payment recipient
+          required: false
+          explode: false
+          schema:
+            type: string
+        - name: envelope_id
+          in: query
+          description: Envelope's ID the transaction belongs to
+          required: true
+          explode: false
+          schema:
+            type: integer
       responses:
-        "200":
+        '200':
           description: Successful operation
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Transaction'
-        "400":
+        '400':
           description: Payment and/or envelope_id not supplied
           content:
             application/json:
               example: Invalid input
-      x-swagger-router-controller: Transaction
   /transaction/{id}:
     get:
       tags:
-      - transaction
+        - transaction
       summary: Find transaction by ID
       description: Returns a list of transactions
       operationId: getTransactionById
       parameters:
-      - name: id
-        in: path
-        description: ID of transaction to return
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: integer
+        - name: id
+          in: path
+          description: ID of transaction to return
+          required: true
+          schema:
+            type: integer
       responses:
-        "200":
+        '200':
           description: Successful operation
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Transaction'
-        "400":
+        '400':
           description: Invalid ID supplied
           content:
             application/json:
               example: Not a valid transaction ID
-      x-swagger-router-controller: Transaction
     put:
       tags:
-      - transaction
+        - transaction
       summary: Update an existing transaction
       description: Update a transaction by ID
       operationId: updateTransaction
       parameters:
-      - name: id
-        in: path
-        description: ID of transaction to return
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: integer
-      - name: date
-        in: query
-        description: Date of the transaction
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: payment
-        in: query
-        description: Payment amount
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: number
-      - name: recipient
-        in: query
-        description: Payment recipient
-        required: false
-        style: form
-        explode: false
-        schema:
-          type: string
-      - name: envelope_id
-        in: query
-        description: Envelope's ID the transaction belongs to
-        required: false
-        style: form
-        explode: false
-        schema:
-          type: integer
+        - name: id
+          in: path
+          description: ID of transaction to return
+          required: true
+          schema:
+            type: integer
+        - name: date
+          in: query
+          description: Date of the transaction
+          required: false
+          schema:
+            type: string
+        - name: payment
+          in: query
+          description: Payment amount
+          required: false
+          schema:
+            type: number
+        - name: recipient
+          in: query
+          description: Payment recipient
+          required: false
+          explode: false
+          schema:
+            type: string
+        - name: envelope_id
+          in: query
+          description: Envelope's ID the transaction belongs to
+          required: false
+          explode: false
+          schema:
+            type: integer
       responses:
-        "200":
+        '200':
           description: Successful operation
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Transaction'
-        "400":
+        '400':
           description: Invalid ID supplied
           content:
             application/json:
               example: Not a valid transaction ID
-      x-swagger-router-controller: Transaction
     delete:
       tags:
-      - transaction
+        - transaction
       summary: Delete a transaction by ID
       description: Delete a transaction by ID
       operationId: deleteTransaction
       parameters:
-      - name: id
-        in: path
-        description: ID of transaction to return
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: integer
+        - name: id
+          in: path
+          description: ID of transaction to return
+          required: true
+          schema:
+            type: integer
       responses:
-        "204":
+        '204':
           description: Successful operation
-        "400":
+        '400':
           description: Invalid ID supplied
           content:
             application/json:
               example: Not a valid transaction ID
-      x-swagger-router-controller: Transaction
 components:
   schemas:
     Envelope:
       required:
-      - title
+        - title
       type: object
       properties:
         id:
@@ -415,14 +373,10 @@ components:
         balance:
           type: number
           example: 2000
-      example:
-        balance: 2000
-        id: 1
-        title: title1
     Transaction:
       required:
-      - envelope_id
-      - payment
+        - payment
+        - envelope_id
       type: object
       properties:
         id:
@@ -432,7 +386,7 @@ components:
         date:
           type: string
           format: YYYY-MM-DD
-          example: 2024-02-18
+          example: '2024-02-18'
         payment:
           type: number
           example: 1000
@@ -443,12 +397,6 @@ components:
           type: integer
           format: int64
           example: 4
-      example:
-        date: 2024-02-18
-        envelope_id: 4
-        recipient: Bank
-        payment: 1000
-        id: 1
   examples:
     transfer:
       summary: A sample of transfer of two envelopes
@@ -464,25 +412,25 @@ components:
     envelopes:
       summary: A sample of a list of envelopes
       value:
-      - id: 1
-        title: title1
-        balance: 1000
-      - id: 2
-        title: title2
-        balance: 500
-      - id: 3
-        title: title3
-        balance: 10
+        - id: 1
+          title: title1
+          balance: 1000
+        - id: 2
+          title: title2
+          balance: 500
+        - id: 3
+          title: title3
+          balance: 10
     transactions:
       summary: A sample of a list of transactions
       value:
-      - id: 1
-        date: 2024-02-18T05:00:00.000Z
-        payment: 10
-        recipient: Bank
-        envelope_id: 4
-      - id: 2
-        date: 2024-02-15T05:00:00.000Z
-        payment: 300
-        recipient: Flowers
-        envelope_id: 1
+        - id: 1
+          date: '2024-02-18T05:00:00.000Z'
+          payment: 10
+          recipient: Bank
+          envelope_id: 4
+        - id: 2
+          date: '2024-02-15T05:00:00.000Z'
+          payment: 300
+          recipient: Flowers
+          envelope_id: 1

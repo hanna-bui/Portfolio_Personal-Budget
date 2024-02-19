@@ -1,7 +1,7 @@
 {
   "scripts": {
     "prestart": "npm install",
-    "start": "nodemon app.js",
+    "start": "node app.js",
     "test": "mocha test/**_test.mjs --timeout 4000 --exit",
     "debug": "nodemon --inspect app.js"
   },

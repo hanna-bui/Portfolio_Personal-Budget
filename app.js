@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require("path");
 
 const bodyParser = require('body-parser');
 const app = express();
@@ -26,7 +27,7 @@ app.use(
 )
 
 app.get('/', (req, res, next) => {
-    res.sendFile('index.html');
+    res.sendFile(path.join(__dirname, 'index.html'));
 })
 
 app.use('/envelope', envelopeRouter);

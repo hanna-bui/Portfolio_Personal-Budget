@@ -41,7 +41,7 @@ app.use((err, req, res, next) => {
 
 // TODO: Enable after finish testing
 const server = app.listen(PORT, () => {
-    console.log(`Example app listening on port ${port}!`)
+    console.log(`Example app listening on port ${PORT}!`)
 });
 
 server.keepAliveTimeout = 120 * 1000;

@@ -2,12 +2,16 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Personal Budget - OpenAPI 3.0",
+    "version": "1.0.1",
     "description": "This is an api that allows you to create envelopes to create and manage a personal budget",
-    "version": "1.0.1"
+    "license": {
+      "name": "MIT License"
+    }
   },
   "servers": [
     {
-      "url": ""
+      "url": "https://personal-budget-4nhf.onrender.com",
+      "variables": {}
     }
   ],
   "tags": [
@@ -580,7 +584,7 @@
           "date": {
             "type": "string",
             "format": "YYYY-MM-DD",
-            "example": "2024-02-18T00:00:00.000Z"
+            "example": "2024-02-18"
           },
           "payment": {
             "type": "number",

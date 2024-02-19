@@ -5,10 +5,11 @@ const app = express();
 const morgan = require('morgan');
 const cors = require('cors');
 
-const SwaggerUI = require('swagger-ui');
-
 const { envelopeRouter } = require('./routes/envelope.js');
 const { transactionRouter } = require('./routes/transaction.js');
+const { docRouter } = require('./routes/documentation.js');
+
+const clc = require('cli-color');
 
 const PORT = 3000;
 
@@ -30,6 +31,7 @@ app.get('/', (req, res, next) => {
 
 app.use('/envelope', envelopeRouter);
 app.use('/transaction', transactionRouter);
+app.use('/api-docs', docRouter);
 
 // Error-handling Middleware
 app.use((err, req, res, next) => {
@@ -39,7 +41,7 @@ app.use((err, req, res, next) => {
 
 // TODO: Enable after finish testing
 app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}/`)
+    console.log(`\nServer running on:`, clc.blue(`http://localhost:${PORT}/`), '\nSwagger API-doc:', clc.blue(`http://localhost:3000/api-docs\n`))
 });
 
 module.exports = app

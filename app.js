@@ -41,7 +41,7 @@ app.use((err, req, res, next) => {
 
 // TODO: Enable after finish testing
 app.listen(PORT, () => {
-    console.log(`\nServer running on:`, clc.blue(`http://localhost:${PORT}/`), '\nSwagger API-doc:', clc.blue(`http://localhost:3000/api-docs\n`))
+    console.log(`\nServer running on:`, clc.blue(`https://personal-budget-g6ff.onrender.com/`), '\nSwagger API-doc:', clc.blue(`https://personal-budget-g6ff.onrender.com/api-docs\n`))
 });
 
 module.exports = app

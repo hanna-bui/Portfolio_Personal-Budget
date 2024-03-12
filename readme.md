@@ -1,6 +1,6 @@
 # Personal Budget
 
-An Express API that manages a persoanl budget using envelopes. Users can create, read, update and delete envelopes and transactions. Transactions are payments made that uses the money saved in an envelope. Data is saved in a database using Neon's PostgresSQL. Server is deployed on Render.
+An Express API that manages a personal budget using envelopes. Users can create, read, update and delete envelopes and transactions. Transactions are payments made that uses the money saved in an envelope. Data is saved in a database using Neon's PostgresSQL. Server is deployed on Render.
 
 Server's location: <https://personal-budget-4nhf.onrender.com>
 
